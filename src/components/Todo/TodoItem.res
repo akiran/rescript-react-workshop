@@ -1,5 +1,12 @@
+type todo = {
+  id: int,
+  is_completed: bool,
+  title: string,
+  is_public: bool,
+}
+
 @react.component
-let make = (~todo: TodosQuery.Inner.t_todos) => {
+let make = (~todo) => {
   let removeTodo = _e => ()
   let toggleTodo = _e => ()
 
