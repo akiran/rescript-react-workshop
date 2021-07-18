@@ -8,7 +8,7 @@ let make = () => {
         <div className="col-md-6 sliderMenu p-30 bg-gray border-right" />
       </div>
       <div className="col-md-3 p-left-right-0">
-        <div className="col-md-12 sliderMenu p-30 bg-gray"> <OnlineUsersWrapper /> </div>
+        <div className="col-md-12 sliderMenu p-30 bg-gray" />
       </div>
     </div>
   </div>
