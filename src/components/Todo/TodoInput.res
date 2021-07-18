@@ -1,5 +1,5 @@
 @react.component
-let make = (~isPublic=false) => {
+let make = () => {
   let (todoInput, setTodoInput) = React.useState(_ => "")
 
   let resetInput = _e => {
