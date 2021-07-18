@@ -8,21 +8,9 @@ let initialState = {
   clearInProgress: false,
 }
 
-// Remove all the todos that are completed
-module ClearCompletedMutation = %graphql(`
-  mutation clearCompleted {
-    delete_todos(
-      where: { is_completed: { _eq: true }, is_public: { _eq: false } }
-    ) {
-      affected_rows
-    }
-  }
-`)
-
 @react.component
 let make = () => {
   let todosResult = TodosQuery.use()
-  let (clearCompletedTodos, _clearCompletedTodosResult) = ClearCompletedMutation.use()
   let (state, setState) = React.useState(_ => initialState)
 
   let filterResults = filter => {
@@ -32,34 +20,7 @@ let make = () => {
     })
   }
 
-  let clearCompleted = _e =>
-    clearCompletedTodos(
-      ~optimisticResponse=_variables => {
-        delete_todos: Some(
-          (
-            {
-              affected_rows: 1,
-              __typename: "todos_mutation_response",
-            }: ClearCompletedMutation.ClearCompletedMutation_inner.t_delete_todos
-          ),
-        ),
-      },
-      ~update=({readQuery, writeQuery}, {data: _data}) => {
-        let existingTodos = readQuery(~query=module(TodosQuery), ())
-        switch existingTodos {
-        | Some(todosResult) =>
-          switch todosResult {
-          | Ok({todos}) => {
-              let newTodos = Js.Array2.filter(todos, t => !t.is_completed)
-              let _ = writeQuery(~query=module(TodosQuery), ~data={todos: newTodos}, ())
-            }
-          | _ => ()
-          }
-        | None => ()
-        }
-      },
-      (),
-    )->ignore
+  let clearCompleted = _e => ()
 
   switch todosResult {
   | {loading: true} => <div> {React.string("Loading...")} </div>
