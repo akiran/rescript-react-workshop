@@ -1,5 +1,15 @@
+type user = {name: string}
+
+type todo = {
+  id: string,
+  title: string,
+  is_completed: bool,
+  is_public: bool,
+  user: user,
+}
+
 @react.component
-let make = (~todo: PublicTodosQuery.Inner.t_todos) => {
+let make = (~todo) => {
   <li>
     <div className="userInfoPublic"> {`@${todo.user.name}`->React.string} </div>
     <div className={"labelContent" ++ (todo.is_completed ? " completed" : "")}>
