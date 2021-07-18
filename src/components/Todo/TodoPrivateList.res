@@ -25,7 +25,6 @@ let initialState = {
 
 @react.component
 let make = () => {
-  let todosResult = TodosQuery.use()
   let (state, setState) = React.useState(_ => initialState)
 
   let filterResults = filter => {
